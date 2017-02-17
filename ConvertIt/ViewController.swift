@@ -23,6 +23,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                          "meters to yards"]
     
     var toUnits = ""
+    var fromUnits = ""
+    var conversionString = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +39,48 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func showAlert() {
+        let alertController = UIAlertController(title: "Entry Error", message: "Please enter a valid number. Not an empty string, no commas, symbols, or non-numeric characters.", preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(defaultAction)
+        present(alertController, animated: true, completion: nil)
+    }
    
+    func calculateConversion() {
+        
+        var inputValue = 0.0
+        var outputValue = 0.0
+        
+        if let inputValue = Double(userInput.text!) {
+            
+            switch conversionString {
+            case "miles to kilometers":
+                outputValue = inputValue / 0.62137
+            case "kilometers to miles":
+                outputValue = inputValue * 0.62137
+            case "feet to meters":
+                outputValue = inputValue / 3.2808
+            case "meters to feet":
+                outputValue = inputValue * 3.2808
+            case "yards to meters":
+                outputValue = inputValue / 1.0936
+            case "meters to yards":
+                outputValue = inputValue * 1.0936
+            default:
+                showAlert()
+            }
+            
+        } else {
+            
+            showAlert()
+        }
+        
+        resultsLabel.text = "\(userInput.text!) \(fromUnits) = \(outputValue) \(toUnits)"
+        
+    }
+    
+    
     // MARK:- Delegates & DataSources, Required Methods for UIPickerView
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -54,10 +97,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
+      
+        
+        conversionString = formulasArray[row]
         let unitsArray = formulasArray[row].components(separatedBy: " to ")
-        fromUnitsLabel.text = unitsArray[0]
+        
+        fromUnits = unitsArray[0]
         toUnits = unitsArray[1]
-        resultsLabel.text = toUnits
+        fromUnitsLabel.text = fromUnits
+        // resultsLabel.text = toUnits
         
     }
     
@@ -73,10 +121,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         } else {
             resultsLabel.text = ""
             
-            let alertController = UIAlertController(title: "Entry Error", message: "Please enter a valid number. Not an empty string, no commas, symbols, or non-numeric characters.", preferredStyle: .alert)
-            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertController.addAction(defaultAction)
-            present(alertController, animated: true, completion: nil)
+            
             
             
         }
