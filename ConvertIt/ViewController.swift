@@ -14,6 +14,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var resultsLabel: UILabel!
     @IBOutlet weak var fromUnitsLabel: UILabel!
     @IBOutlet weak var formulaPicker: UIPickerView!
+    @IBOutlet weak var decimalSegment: UISegmentedControl!
     
     var formulasArray = ["miles to kilometers",
                          "kilometers to miles",
@@ -33,6 +34,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         formulaPicker.dataSource = self
         formulaPicker.delegate = self
         
+        conversionString = formulasArray[0]
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,6 +54,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         var inputValue = 0.0
         var outputValue = 0.0
+        var outputString = ""
         
         if let inputValue = Double(userInput.text!) {
             
@@ -70,17 +74,21 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             default:
                 showAlert()
             }
-            
         } else {
-            
-            showAlert()
+                showAlert()
+            }
+        
+        if decimalSegment.selectedSegmentIndex < 3 {
+             outputString = String(format: "%." + String(decimalSegment.selectedSegmentIndex + 1) + "f", outputValue)
+        } else {
+            outputString = String(outputValue)
         }
         
-        resultsLabel.text = "\(userInput.text!) \(fromUnits) = \(outputValue) \(toUnits)"
+        resultsLabel.text = "\(userInput.text!) \(fromUnits) = \(outputString) \(toUnits)"
         
     }
-    
-    
+
+
     // MARK:- Delegates & DataSources, Required Methods for UIPickerView
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -114,20 +122,14 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     @IBAction func convertButtonPressed(_ sender: UIButton) {
-        
-        if let miles = Double(userInput.text!) {
-            let km = miles * 1.6
-            resultsLabel.text = "\(miles) miles = \(km) kilometers"
-        } else {
-            resultsLabel.text = ""
             
-            
+            calculateConversion()
             
             
         }
-        
-    }
     
+    @IBAction func decimalSelected(_ sender: UISegmentedControl) {
+    }
     
     
 }
