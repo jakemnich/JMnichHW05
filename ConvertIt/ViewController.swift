@@ -8,20 +8,28 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var userInput: UITextField!
     @IBOutlet weak var resultsLabel: UILabel!
     @IBOutlet weak var fromUnitsLabel: UILabel!
     @IBOutlet weak var formulaPicker: UIPickerView!
     @IBOutlet weak var decimalSegment: UISegmentedControl!
+    @IBOutlet weak var posNeg: UISegmentedControl!
+    
     
     var formulasArray = ["miles to kilometers",
                          "kilometers to miles",
                          "feet to meters",
                          "meters to feet",
                          "yards to meters",
-                         "meters to yards"]
+                         "meters to yards",
+                         "inches to centimeters",
+                         "centimeters to inches",
+                         "fahrenheit to celcius",
+                         "celcius to fahrenheit",
+                         "quarts to liters",
+                         "liters to quarts"]
     
     var toUnits = ""
     var fromUnits = ""
@@ -33,8 +41,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         formulaPicker.dataSource = self
         formulaPicker.delegate = self
+        userInput.delegate = self
         
         conversionString = formulasArray[0]
+        
+        userInput.becomeFirstResponder()
         
     }
     
@@ -50,6 +61,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         present(alertController, animated: true, completion: nil)
     }
    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
     func calculateConversion() {
         
         var inputValue = 0.0
@@ -71,9 +88,22 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 outputValue = inputValue / 1.0936
             case "meters to yards":
                 outputValue = inputValue * 1.0936
+            case "inches to centimeters":
+                outputValue = inputValue / 0.39370
+            case "centimeters to inches":
+                outputValue = inputValue * 0.39370
+            case "fahrenheit to celcius":
+                outputValue = (inputValue - 32) * (5/9)
+            case "celcius to fahrenheit":
+                outputValue = (inputValue * (9/5)) + 32
+            case "quarts to liters":
+                outputValue = inputValue / 1.05669
+            case "liters to quarts":
+                outputValue = inputValue * 1.05669
             default:
                 showAlert()
             }
+            
         } else {
                 showAlert()
             }
@@ -124,12 +154,17 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBAction func convertButtonPressed(_ sender: UIButton) {
             
             calculateConversion()
-            
-            
+        
         }
     
     @IBAction func decimalSelected(_ sender: UISegmentedControl) {
+        calculateConversion()
+        
     }
+    
+    @IBAction func posNegPressed(_ sender: UISegmentedControl) {
+    }
+    
     
     
 }

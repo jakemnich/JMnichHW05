@@ -22,8 +22,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aur-yC-mRe">
-                                <rect key="frame" x="279" y="37" width="56" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aur-yC-mRe">
+                                <rect key="frame" x="244" y="37" width="115" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="56" id="M8S-Px-9IS"/>
                                 </constraints>
@@ -52,8 +52,8 @@
                                     <constraint firstAttribute="height" constant="180" id="2zl-GG-V87"/>
                                 </constraints>
                             </pickerView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="B1o-AK-g7Z">
-                                <rect key="frame" x="47" y="32" width="215" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="B1o-AK-g7Z">
+                                <rect key="frame" x="67" y="32" width="169" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -96,6 +96,18 @@
                                     <action selector="convertButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZB0-qt-5ub"/>
                                 </connections>
                             </button>
+                            <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7Qe-bk-wKv">
+                                <rect key="frame" x="12" y="33" width="47" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="+"/>
+                                    <segment title="-"/>
+                                </segments>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="posNegPressed:" destination="BYZ-38-t0r" eventType="valueChanged" id="nan-9o-qoV"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -125,6 +137,7 @@
                         <outlet property="decimalSegment" destination="j9e-HY-yBy" id="UH9-Qc-Bmu"/>
                         <outlet property="formulaPicker" destination="84n-03-atS" id="22e-iy-a2q"/>
                         <outlet property="fromUnitsLabel" destination="Aur-yC-mRe" id="81L-nS-fOw"/>
+                        <outlet property="posNeg" destination="7Qe-bk-wKv" id="lA9-O1-NcT"/>
                         <outlet property="resultsLabel" destination="p3b-7u-Nea" id="15E-C8-fqV"/>
                         <outlet property="userInput" destination="B1o-AK-g7Z" id="zvS-kM-btW"/>
                     </connections>
